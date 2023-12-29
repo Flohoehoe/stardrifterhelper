@@ -1,0 +1,123 @@
+body,
+      html {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #221f1f;
+      }
+      #hexfield {
+        position: relative;
+        cursor: pointer;
+      }
+      #marker {
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        background-image: url("./img/spaceship.png"); /* Pfad zum Icon-Bild */
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .context-menu {
+        position: absolute;
+        z-index: 1000;
+        width: 200px;
+        background: white;
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 5px #888;
+      }
+      
+      .context-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      .context-menu ul li {
+        padding: 10px;
+        cursor: pointer;
+      }
+      
+      .context-menu ul li:hover {
+        background-color: #f7f7f7;
+      }
+      
+      .menu-bar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 200px; /* Breite der Menüleiste */
+        height: 100%;
+        background-color: #333; /* Hintergrundfarbe der Menüleiste */
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      
+      .menu-btn {
+        display: block;
+        padding: 10px;
+        margin-bottom: 10px;
+        color: white;
+        background-color: #555;
+        border: none;
+        width: 100%;
+        box-sizing: border-box;
+        cursor: pointer;
+      }
+      
+      .menu-btn:hover {
+        background-color: #777;
+      }
+      
+      .sheet-window {
+        display: none; /* standardmäßig versteckt */
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        height: 80%;
+        background-color: white;
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        padding: 20px;
+        box-sizing: border-box;
+        z-index: 10;
+        overflow: auto; /* Falls der Inhalt zu groß ist */
+      }
+      
+
+      .sheet-window {
+        /* Vorhandene Stile für das Fenster */
+      }
+      
+      .char-section label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      
+      .char-section .char-values {
+        /* Styling für die Gruppe der Werte */
+      }
+      
+      .char-section .char-value {
+        display: inline-block;
+        margin-right: 10px;
+        padding: 5px;
+        border: 2px solid transparent;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      
+      .char-section .char-value.selected {
+        border-color: black;
+      }
+      
+
+      .mind-destiny {
+        display: flex;
+        padding: 30px;
+      }

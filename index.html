@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hexfeld Positionsmarkierung</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="menu-bar">
+      <button class="menu-btn" data-sheet="charSheet">Charakter Sheet</button>
+      <button class="menu-btn" data-sheet="shipSheet">Ship Sheet</button>
+      <button class="menu-btn" data-sheet="shipCombat">Ship Combat</button>
+      <button class="menu-btn" data-sheet="tablesSheet">Tables Sheet</button>
+    </div>
+
+    <div id="charSheet" class="sheet-window">
+      <!-- Inhalt für das Charakter Sheet -->
+      <div class="char-section">
+        <label for="charName">NAME:</label>
+        <input type="text" id="charName" name="charName" />
+      </div>
+
+      <!-- Health Abschnitt -->
+
+      <div class="char-section">
+        <label>Health</label>
+        <div class="char-values" data-group="health">
+          <span
+            ><br />
+            Prowess:</span
+          >
+          <span class="char-value" data-value="none"
+            >none <br />
+            4</span
+          >
+          <span class="char-value" data-value="light"
+            >Light DMG <br />
+            4</span
+          >
+          <span class="char-value" data-value="medium"
+            >Medium DMG <br />
+            3</span
+          >
+          <span class="char-value" data-value="heavy"
+            >Heavy DMG <br />
+            2</span
+          >
+          <span class="char-value" data-value="debilitating"
+            >Debilitating DMG <br />
+            1</span
+          >
+        </div>
+      </div>
+      <div class="mind-destiny">
+        <!-- Mind Abschnitt -->
+        <div class="char-section">
+          <label>Mind</label>
+          <div class="char-values" data-group="mind">
+            <span class="char-value" data-value="1">1</span>
+            <span class="char-value" data-value="2">2</span>
+            <span class="char-value" data-value="3">3</span>
+            <span class="char-value" data-value="4">4</span>
+          </div>
+        </div>
+        <!-- Destiny Abschnitt -->
+        <div class="char-section">
+          <label>Destiny Points</label>
+          <div class="char-values" data-group="destiny">
+            <span class="char-value" data-value="1">1</span>
+            <span class="char-value" data-value="2">2</span>
+            <span class="char-value" data-value="3">3</span>
+            <span class="char-value" data-value="4">4</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="notoriety-weapons-auxilliary">
+        <div class="notoriety-weapons">
+          <div class="char-section">
+            <label>Notoriety</label>
+            <div class="char-values" data-group="notoriety">
+              <span class="char-value" data-value="star1"
+                ><img src="./img/star1.png" alt=""
+              /></span>
+              <span class="char-value" data-value="star2"
+                ><img src="./img/star2.png" alt=""
+              /></span>
+              <span class="char-value" data-value="star3"
+                ><img src="./img/star3.png" alt=""
+              /></span>
+              <span class="char-value" data-value="star4"
+                ><img src="./img/star4.png" alt=""
+              /></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="shipSheet" class="sheet-window">
+      <!-- Inhalt für das Ship Sheet -->
+    </div>
+
+    <div id="shipCombat" class="sheet-window">
+      <!-- Inhalt für Ship Combat -->
+    </div>
+
+    <div id="tablesSheet" class="sheet-window">
+      <!-- Inhalt für Tables Sheet -->
+    </div>
+
+    <div id="hexfield">
+      <img src="img/grid.jpg" alt="Hexfeld" />
+      <div id="marker"></div>
+    </div>
+
+    <div id="contextMenu" class="context-menu" style="display: none">
+      <ul>
+        <li id="placeShip">Positioniere Raumschiff</li>
+        <li id="placeStation">Positioniere Point of Interest</li>
+        <!-- Weitere Menüpunkte hier hinzufügen -->
+      </ul>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
