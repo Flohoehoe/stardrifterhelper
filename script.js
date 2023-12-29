@@ -24,12 +24,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
   });
 
+
+  const charName = document.getElementById('charName');
   const mindValues = document.querySelector('.char-values[data-group="mind"]');
   const healthValues = document.querySelector('.char-values[data-group="health"]');
   const destinyValues = document.querySelector('.char-values[data-group="destiny"]');
   const notorietyValues = document.querySelector('.char-values[data-group="notoriety"]');
 
 
+  charName.addEventListener('change', () => {
+    const characterName = charName.value;
+    saveSelection('characterName', characterName);
+  })
 
   function saveSelection(groupName, value) {
     localStorage.setItem(groupName, value);
@@ -77,6 +83,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
   
   function loadSelections() {
+    charName.value = localStorage.getItem('characterName');
     const groups = ['health', 'mind', 'destiny', 'notoriety'];
     groups.forEach(groupName => {
       const savedValue = localStorage.getItem(groupName);
