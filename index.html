@@ -16,82 +16,51 @@
 
     <div id="charSheet" class="sheet-window">
       <!-- Inhalt für das Charakter Sheet -->
-      <div class="char-section">
-        <label for="charName">NAME:</label>
-        <input type="text" id="charName" name="charName" />
+      <div id="head">
+        <div id="titel">
+          <span>Star Drifter</span>
+        </div>
+        <div class="charname">
+          <label for="charName">NAME:</label>
+          <input type="text" id="charName" name="charName" />
+        </div>
+        <div id="sheetTitel">
+          <span>Character Sheet</span>
+        </div>
       </div>
 
       <!-- Health Abschnitt -->
-
       <div class="char-section">
-        <label>Health</label>
-        <div class="char-values" data-group="health">
-          <span
-            ><br />
-            Prowess:</span
-          >
-          <span class="char-value" data-value="none"
-            >none <br />
-            4</span
-          >
-          <span class="char-value" data-value="light"
-            >Light DMG <br />
-            4</span
-          >
-          <span class="char-value" data-value="medium"
-            >Medium DMG <br />
-            3</span
-          >
-          <span class="char-value" data-value="heavy"
-            >Heavy DMG <br />
-            2</span
-          >
-          <span class="char-value" data-value="debilitating"
-            >Debilitating DMG <br />
-            1</span
-          >
+        <div class="health">
+          <div class="char-values" data-group="health">
+            <div id="healthmarker"></div>
+          </div>
         </div>
       </div>
+
+      <!-- Mind & Destiny Abschnitt -->
       <div class="mind-destiny">
         <!-- Mind Abschnitt -->
-        <div class="char-section">
-          <label>Mind</label>
-          <div class="char-values" data-group="mind">
-            <span class="char-value" data-value="1">1</span>
-            <span class="char-value" data-value="2">2</span>
-            <span class="char-value" data-value="3">3</span>
-            <span class="char-value" data-value="4">4</span>
-          </div>
+        <div class="char-values" data-group="mind">
+          <div id="mindmarker"></div>
         </div>
+
         <!-- Destiny Abschnitt -->
-        <div class="char-section">
-          <label>Destiny Points</label>
-          <div class="char-values" data-group="destiny">
-            <span class="char-value" data-value="1">1</span>
-            <span class="char-value" data-value="2">2</span>
-            <span class="char-value" data-value="3">3</span>
-            <span class="char-value" data-value="4">4</span>
-          </div>
+        <div class="char-values" data-group="destiny">
+          <div id="destinymarker"></div>
         </div>
       </div>
 
+      <!-- Notoriety, Weapons & Auxilliary Abschnitt -->
       <div class="notoriety-weapons-auxilliary">
         <div class="notoriety-weapons">
-          <div class="char-section">
-            <label>Notoriety</label>
-            <div class="char-values" data-group="notoriety">
-              <span class="char-value" data-value="star1"
-                ><img src="./img/star1.png" alt=""
-              /></span>
-              <span class="char-value" data-value="star2"
-                ><img src="./img/star2.png" alt=""
-              /></span>
-              <span class="char-value" data-value="star3"
-                ><img src="./img/star3.png" alt=""
-              /></span>
-              <span class="char-value" data-value="star4"
-                ><img src="./img/star4.png" alt=""
-              /></span>
+          <div class="char-values" data-group="notoriety">
+            <div id="notorietymarker"></div>
+          </div>
+          <div class="weapons">
+            <div class="weapon-input">
+              <input type="text" id="weaponA" name="weaponA" />
+              <input type="text" id="weaponB" name="weaponB" />
             </div>
           </div>
         </div>

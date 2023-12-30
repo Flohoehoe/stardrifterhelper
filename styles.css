@@ -1,5 +1,7 @@
 body,
       html {
+        font-family: monospace;
+        font-size: large;
         height: 100%;
         margin: 0;
         display: flex;
@@ -15,7 +17,47 @@ body,
         position: absolute;
         width: 90px;
         height: 90px;
-        background-image: url("./img/spaceship.png"); /* Pfad zum Icon-Bild */
+        background-image: url("./img/spaceship.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      #healthmarker {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      #mindmarker {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      #destinymarker {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      #notorietymarker {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("./img/marker.png");
         background-size: cover;
         visibility: hidden;
         pointer-events: none;
@@ -78,7 +120,7 @@ body,
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        width: 80%;
+        width: 37%;
         height: 80%;
         background-color: white;
         border: 1px solid #ccc;
@@ -89,9 +131,77 @@ body,
         overflow: auto; /* Falls der Inhalt zu groß ist */
       }
       
+      #head {
+        width: 660px;
+        display: flex;
+        justify-content: space-between;
+      }
 
-      .sheet-window {
-        /* Vorhandene Stile für das Fenster */
+      .sheet-window .health {
+        background-image: url('./img/health.png');
+        background-size: cover;
+        position: relative;
+        height: 260px;
+        width: 670px;
+      }
+
+      
+      .mind-destiny {
+        display: flex;   
+        width: 100%;  
+      }
+
+      .char-values[data-group="mind"] {
+        flex: 1;
+        background-image: url('./img/mind.png');
+        background-size: 100% 100%;
+        position: relative;
+        height: 100px;
+        width: 48%;
+      }
+
+      .char-values[data-group="destiny"] {
+        flex: 1;
+        background-image: url('./img/destiny.png');
+        background-size: 100% 100%;
+        position: relative;
+        height: 100px;
+        width: 48%;
+      }
+
+      .notoriety-weapons-auxilliary {
+        display: flex;   
+        width: 100%;  
+      }
+
+      .notoriety-weapons {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+      }
+
+      .char-values[data-group="notoriety"] {
+        background-image: url('./img/notoriety.png');
+        background-size: 100% 100%;
+        position: relative;
+        height: 100px;
+        width: 100%;
+      }
+      
+      .weapons {
+        display: flex;
+        flex-direction: column;
+        background-image: url('./img/weapons.png');
+        background-size: 100% 100%;
+        position: relative;
+        height: 180px;
+        width: 100%;
+      }
+
+      .weapon-input {
+        display: flex;
+        flex-direction: column;
+        width: 45%;
       }
       
       .char-section label {
@@ -100,7 +210,9 @@ body,
       }
       
       .char-section .char-values {
-        /* Styling für die Gruppe der Werte */
+        position: relative;
+
+        
       }
       
       .char-section .char-value {
@@ -110,14 +222,4 @@ body,
         border: 2px solid transparent;
         border-radius: 50%;
         cursor: pointer;
-      }
-      
-      .char-section .char-value.selected {
-        border-color: black;
-      }
-      
-
-      .mind-destiny {
-        display: flex;
-        padding: 30px;
-      }
+      }   
