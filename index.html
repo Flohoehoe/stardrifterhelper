@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hexfeld Positionsmarkierung</title>
+    <title>Star Drifters Helper</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -62,8 +62,36 @@
               <input type="text" id="weaponA" name="weaponA" />
               <input type="text" id="weaponB" name="weaponB" />
             </div>
+            <div id="defaultWeaponMarker"></div>
+            <div id="weaponAMarker"></div>
+            <div id="weaponBMarker"></div>
           </div>
         </div>
+        <div class="auxilliary">
+          <div class="auxNameInputs">
+            <input type="text" id="auxilliaryA" name="auxilliaryA" />
+            <input type="text" id="auxilliaryB" name="auxilliaryB" />
+            <input type="text" id="auxilliaryC" name="auxilliaryC" />
+            <input type="text" id="auxilliaryD" name="auxilliaryD" />
+            <input type="text" id="auxilliaryE" name="auxilliaryE" />
+          </div>
+          <div class="auxEventInputs">
+            <input type="text" id="auxilliaryEventA" name="auxilliaryEventA" />
+            <input type="text" id="auxilliaryEventB" name="auxilliaryEventB" />
+            <input type="text" id="auxilliaryEventC" name="auxilliaryEventC" />
+            <input type="text" id="auxilliaryEventD" name="auxilliaryEventD" />
+            <input type="text" id="auxilliaryEventE" name="auxilliaryEventE" />
+          </div>
+        </div>
+      </div>
+      <div class="lucre">
+        <div id="lucremarkerA"></div>
+        <div id="lucremarkerB"></div>
+        <div id="lucremarkerC"></div>
+      </div>
+      <div class="starpoints">
+        <div id="starpointsmarkerA"></div>
+        <div id="starpointsmarkerB"></div>
       </div>
     </div>
 
@@ -80,6 +108,7 @@
     </div>
 
     <div id="hexfield">
+      <h1>Star Drifters Helper</h1>
       <img src="img/grid.jpg" alt="Hexfeld" />
       <div id="marker"></div>
     </div>

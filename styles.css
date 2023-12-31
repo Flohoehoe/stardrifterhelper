@@ -8,15 +8,20 @@ body,
         justify-content: center;
         align-items: center;
         background-color: #221f1f;
+        overflow: hidden;
       }
       #hexfield {
-        position: relative;
+        position: absolute;
         cursor: pointer;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        color: white;     
       }
       #marker {
         position: absolute;
-        width: 90px;
-        height: 90px;
+        width: 60px;
+        height: 60px;
         background-image: url("./img/spaceship.png");
         background-size: cover;
         visibility: hidden;
@@ -61,6 +66,86 @@ body,
         background-size: cover;
         visibility: hidden;
         pointer-events: none;
+      }
+
+      #defaultWeaponMarker {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      #weaponAMarker {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      #weaponBMarker {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      #lucremarkerA {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      #lucremarkerB {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      #lucremarkerC {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none; 
+      }
+
+      #starpointsmarkerA {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none; 
+      }
+
+      #starpointsmarkerB {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none; 
       }
 
       .context-menu {
@@ -120,7 +205,7 @@ body,
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        width: 37%;
+        width: 720px;
         height: 80%;
         background-color: white;
         border: 1px solid #ccc;
@@ -142,7 +227,7 @@ body,
         background-size: cover;
         position: relative;
         height: 260px;
-        width: 670px;
+        width: 676px;
       }
 
       
@@ -154,19 +239,19 @@ body,
       .char-values[data-group="mind"] {
         flex: 1;
         background-image: url('./img/mind.png');
-        background-size: 100% 100%;
+        background-size: cover;
         position: relative;
         height: 100px;
-        width: 48%;
+        width: 50%;
       }
 
       .char-values[data-group="destiny"] {
         flex: 1;
         background-image: url('./img/destiny.png');
-        background-size: 100% 100%;
+        background-size: cover;
         position: relative;
         height: 100px;
-        width: 48%;
+        width: 50%;
       }
 
       .notoriety-weapons-auxilliary {
@@ -178,11 +263,12 @@ body,
         display: flex;
         flex-direction: column;
         width: 50%;
+        padding-left: 1px;
       }
 
       .char-values[data-group="notoriety"] {
         background-image: url('./img/notoriety.png');
-        background-size: 100% 100%;
+        background-size: cover;
         position: relative;
         height: 100px;
         width: 100%;
@@ -191,18 +277,76 @@ body,
       .weapons {
         display: flex;
         flex-direction: column;
+        margin-left: 1px;
         background-image: url('./img/weapons.png');
-        background-size: 100% 100%;
+        background-size: cover;
         position: relative;
-        height: 180px;
+        height: 164px;
         width: 100%;
       }
 
       .weapon-input {
+        position: relative;
+        top: 64%;
+        left: 26.5%;
+        transform: translate(-50%, -50%);
+        gap: 17px;
         display: flex;
         flex-direction: column;
-        width: 45%;
+        width: 36%;
       }
+
+      .auxilliary {
+        background-image: url('./img/auxilliary.png');
+        background-size: cover;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        width: 48.9%;
+        height: 263px;
+      }
+
+      .auxNameInputs {
+        position: relative;
+        top: 68%;
+        left: 30%;
+        transform: translate(-50%, -50%);
+        gap: 21px;
+        display: flex;
+        flex-direction: column;
+        width: 42%;
+      }
+
+      .auxEventInputs {
+        position: relative;
+        top: 68%;
+        left: 41%;
+        transform: translate(-50%, -50%);
+        gap: 21px;
+        display: flex;
+        flex-direction: column;
+        width: 16%;
+      }
+
+      .lucre {
+        background-image: url('./img/lucre.png');
+        background-size: cover;
+        position: relative;
+        height: 144px;
+        width: 99%;
+        margin-left: 2px;
+      }
+
+      .starpoints {
+        background-image: url('./img/starpoints.png');
+        background-size: cover;
+        position: relative;
+        height: 87px;
+        width: 99%;
+        margin-left: 2px;
+      }
+
+      
       
       .char-section label {
         display: block;
