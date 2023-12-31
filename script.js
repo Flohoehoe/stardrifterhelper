@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", (event) => {
+  // Map und Marker constants
   const hexfield = document.getElementById("hexfield");
   const marker = document.getElementById("marker");
+  let rightClickPosition = { x: 0, y: 0 };
 
+  // Charakterbogen constants
   const charName = document.getElementById("charName");
 
   const healthmarker = document.getElementById("healthmarker");
@@ -51,12 +54,97 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const buttons = document.querySelectorAll(".menu-btn");
   const sheets = document.querySelectorAll(".sheet-window");
 
-  let rightClickPosition = { x: 0, y: 0 };
+  //shipsheet constants
+  const shipSheet = document.querySelector(".shipsheet");
+  const shipNameInput = document.getElementById("shipname");
+  const hulldamageMarker = document.getElementById("hulldmgMarker");
+  const cannonsMarker = document.getElementById("cannonsMarker");
+  const thrusterMarker = document.getElementById("thrusterMarker");
+  const fuelcellMarker = document.getElementById("fuelcellMarker");
+
+  //soi Inputs
+  const soiHexInputA = document.getElementById("soiHexInputA");
+  const soiHexInputB = document.getElementById("soiHexInputB");
+  const soiHexInputC = document.getElementById("soiHexInputC");
+  const soiHexInputD = document.getElementById("soiHexInputD");
+  const soiHexInputE = document.getElementById("soiHexInputE");
+
+  const soiNameInputA = document.getElementById("soiNameInputA");
+  const soiNameInputB = document.getElementById("soiNameInputB");
+  const soiNameInputC = document.getElementById("soiNameInputC");
+  const soiNameInputD = document.getElementById("soiNameInputD");
+  const soiNameInputE = document.getElementById("soiNameInputE");
+
+  const soiEventNrInputA = document.getElementById("soiEventNrInputA");
+  const soiEventNrInputB = document.getElementById("soiEventNrInputB");
+  const soiEventNrInputC = document.getElementById("soiEventNrInputC");
+  const soiEventNrInputD = document.getElementById("soiEventNrInputD");
+  const soiEventNrInputE = document.getElementById("soiEventNrInputE");
 
   // Helferfunktionen
 
   function saveSelection(key, value) {
     localStorage.setItem(key, value);
+  }
+
+  function loadShipSheet() {
+    const shipName = localStorage.getItem("shipName");
+    shipNameInput.value = shipName;
+
+    const savedhulldamageMarkerPosition = JSON.parse(
+      localStorage.getItem("hulldamageMarkerPosition")
+    );
+    if (savedhulldamageMarkerPosition) {
+      hulldamageMarker.style.left = `${savedhulldamageMarkerPosition.x}px`;
+      hulldamageMarker.style.top = `${savedhulldamageMarkerPosition.y}px`;
+      hulldamageMarker.style.visibility = "visible";
+    }
+
+    const savedcannonsMarkerPosition = JSON.parse(
+      localStorage.getItem("cannonsMarkerPosition")
+    );
+    if (savedcannonsMarkerPosition) {
+      cannonsMarker.style.left = `${savedcannonsMarkerPosition.x}px`;
+      cannonsMarker.style.top = `${savedcannonsMarkerPosition.y}px`;
+      cannonsMarker.style.visibility = "visible";
+    }
+
+    const savedthrusterMarkerPosition = JSON.parse(
+      localStorage.getItem("thrusterMarkerPosition")
+    );
+    if (savedthrusterMarkerPosition) {
+      thrusterMarker.style.left = `${savedthrusterMarkerPosition.x}px`;
+      thrusterMarker.style.top = `${savedthrusterMarkerPosition.y}px`;
+      thrusterMarker.style.visibility = "visible";
+    }
+
+    const savedfuelcellMarkerPosition = JSON.parse(
+      localStorage.getItem("fuelcellMarkerPosition")
+    );
+    if (savedfuelcellMarkerPosition) {
+      fuelcellMarker.style.left = `${savedfuelcellMarkerPosition.x}px`;
+      fuelcellMarker.style.top = `${savedfuelcellMarkerPosition.y}px`;
+      fuelcellMarker.style.visibility = "visible";
+    }
+
+    //soi
+    soiHexInputA.value = localStorage.getItem("soiHexInputA");
+    soiHexInputB.value = localStorage.getItem("soiHexInputB");
+    soiHexInputC.value = localStorage.getItem("soiHexInputC");
+    soiHexInputD.value = localStorage.getItem("soiHexInputD");
+    soiHexInputE.value = localStorage.getItem("soiHexInputE");
+
+    soiNameInputA.value = localStorage.getItem("soiNameInputA");
+    soiNameInputB.value = localStorage.getItem("soiNameInputB");
+    soiNameInputC.value = localStorage.getItem("soiNameInputC");
+    soiNameInputD.value = localStorage.getItem("soiNameInputD");
+    soiNameInputE.value = localStorage.getItem("soiNameInputE");
+
+    soiEventNrInputA.value = localStorage.getItem("soiEventNrInputA");
+    soiEventNrInputB.value = localStorage.getItem("soiEventNrInputB");
+    soiEventNrInputC.value = localStorage.getItem("soiEventNrInputC");
+    soiEventNrInputD.value = localStorage.getItem("soiEventNrInputD");
+    soiEventNrInputE.value = localStorage.getItem("soiEventNrInputE");
   }
 
   function loadCharSheet() {
@@ -201,8 +289,146 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     if (sheetId === "charSheet") {
       loadCharSheet();
+    } else if (sheetId === "shipSheet") {
+      loadShipSheet();
     }
   }
+
+  // ship sheet events
+
+  shipNameInput.addEventListener("change", () => {
+    const shipName = shipNameInput.value;
+    saveSelection("shipName", shipName);
+  });
+
+  shipSheet.addEventListener("click", (e) => {
+    e.preventDefault();
+    const rect = shipSheet.getBoundingClientRect();
+
+    let x = e.pageX - rect.left - hulldamageMarker.offsetWidth / 2;
+    let y = e.pageY - rect.top - hulldamageMarker.offsetHeight / 2;
+
+    console.log(y);
+    if (y > 77 && y < 170) {
+      hulldamageMarker.style.visibility = "visible";
+      hulldamageMarker.style.left = `${x}px`;
+      hulldamageMarker.style.top = `${y}px`;
+
+      localStorage.setItem(
+        "hulldamageMarkerPosition",
+        JSON.stringify({ x, y })
+      );
+    }
+
+    if (x > -22 && x < 390) {
+      if (y > 350 && y < 450) {
+        cannonsMarker.style.visibility = "visible";
+        cannonsMarker.style.left = `${x}px`;
+        cannonsMarker.style.top = `${y}px`;
+
+        localStorage.setItem("cannonsMarkerPosition", JSON.stringify({ x, y }));
+      }
+      if (y > 510 && y < 590) {
+        thrusterMarker.style.visibility = "visible";
+        thrusterMarker.style.left = `${x}px`;
+        thrusterMarker.style.top = `${y}px`;
+
+        localStorage.setItem(
+          "thrusterMarkerPosition",
+          JSON.stringify({ x, y })
+        );
+      }
+    } else if (x > 450 && x < 615) {
+      if (y > 345 && y < 855) {
+        x = x + 30;
+        y = y + 30;
+        fuelcellMarker.style.visibility = "visible";
+        fuelcellMarker.style.left = `${x}px`;
+        fuelcellMarker.style.top = `${y}px`;
+
+        localStorage.setItem(
+          "fuelcellMarkerPosition",
+          JSON.stringify({ x, y })
+        );
+      }
+    }
+  });
+
+  //soi events
+  soiHexInputA.addEventListener("change", () => {
+    const soiHexInputASaved = soiHexInputA.value;
+    saveSelection("soiHexInputA", soiHexInputASaved);
+  });
+
+  soiHexInputB.addEventListener("change", () => {
+    const soiHexInputBSaved = soiHexInputB.value;
+    saveSelection("soiHexInputB", soiHexInputBSaved);
+  });
+
+  soiHexInputC.addEventListener("change", () => {
+    const soiHexInputCSaved = soiHexInputC.value;
+    saveSelection("soiHexInputC", soiHexInputCSaved);
+  });
+
+  soiHexInputD.addEventListener("change", () => {
+    const soiHexInputDSaved = soiHexInputD.value;
+    saveSelection("soiHexInputD", soiHexInputDSaved);
+  });
+
+  soiHexInputE.addEventListener("change", () => {
+    const soiHexInputESaved = soiHexInputE.value;
+    saveSelection("soiHexInputE", soiHexInputESaved);
+  });
+
+  soiNameInputA.addEventListener("change", () => {
+    const soiNameInputASaved = soiNameInputA.value;
+    saveSelection("soiNameInputA", soiNameInputASaved);
+  });
+
+  soiNameInputB.addEventListener("change", () => {
+    const soiNameInputBSaved = soiNameInputB.value;
+    saveSelection("soiNameInputB", soiNameInputBSaved);
+  });
+
+  soiNameInputC.addEventListener("change", () => {
+    const soiNameInputCSaved = soiNameInputC.value;
+    saveSelection("soiNameInputC", soiNameInputCSaved);
+  });
+
+  soiNameInputD.addEventListener("change", () => {
+    const soiNameInputDSaved = soiNameInputD.value;
+    saveSelection("soiNameInputD", soiNameInputDSaved);
+  });
+
+  soiNameInputE.addEventListener("change", () => {
+    const soiNameInputESaved = soiNameInputE.value;
+    saveSelection("soiNameInputE", soiNameInputESaved);
+  });
+
+  soiEventNrInputA.addEventListener("change", () => {
+    const soiEventNrInputASaved = soiEventNrInputA.value;
+    saveSelection("soiEventNrInputA", soiEventNrInputASaved);
+  });
+
+  soiEventNrInputB.addEventListener("change", () => {
+    const soiEventNrInputBSaved = soiEventNrInputB.value;
+    saveSelection("soiEventNrInputB", soiEventNrInputBSaved);
+  });
+
+  soiEventNrInputC.addEventListener("change", () => {
+    const soiEventNrInputCSaved = soiEventNrInputC.value;
+    saveSelection("soiEventNrInputC", soiEventNrInputCSaved);
+  });
+
+  soiEventNrInputD.addEventListener("change", () => {
+    const soiEventNrInputDSaved = soiEventNrInputD.value;
+    saveSelection("soiEventNrInputD", soiEventNrInputDSaved);
+  });
+
+  soiEventNrInputE.addEventListener("change", () => {
+    const soiEventNrInputESaved = soiEventNrInputE.value;
+    saveSelection("soiEventNrInputE", soiEventNrInputESaved);
+  });
 
   charName.addEventListener("change", () => {
     const characterName = charName.value;

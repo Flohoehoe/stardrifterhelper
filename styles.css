@@ -346,7 +346,97 @@ body,
         margin-left: 2px;
       }
 
+      .shipsheet {
+        background-image: url('./img/shipsheet.png');
+        background-size: cover;
+        position: relative;
+        height: 925px;
+        width: 680px;
+        margin-top: 2px;
+      }
       
+      #shipname {
+        position: relative;
+        top: 1.2%;
+        left: 57%;
+        transform: translate(-50%, -50%);
+        font-size: 14px;
+        text-align: left;
+        font-family: monospace;
+      }
+
+      #hulldmgMarker {
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      #cannonsMarker {
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      
+      #thrusterMarker {
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      #fuelcellMarker {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .soiHexInputs {
+        position: relative;
+        top: 84%;
+        left: 14.5%;
+        transform: translate(-50%, -50%);
+        gap: 17px;
+        display: flex;
+        flex-direction: column;
+        width: 55px;
+      }
+
+      .soiNameInputs {
+        position: relative;
+        top: 64.8%;
+        left: 35.9%;
+        transform: translate(-50%, -50%);
+        gap: 17px;
+        display: flex;
+        flex-direction: column;
+        width: 120px;
+      }
+
+      .soiEventNrInputs {
+        position: relative;
+        top: 45.5%;
+        left: 59.5%;
+        transform: translate(-50%, -50%);
+        gap: 17px;
+        display: flex;
+        flex-direction: column;
+        width: 55px;
+      }
       
       .char-section label {
         display: block;
