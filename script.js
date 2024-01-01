@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
   // Map und Marker constants
   const hexfield = document.getElementById("hexfield");
   const marker = document.getElementById("marker");
+  let soiCounter = 0;
+  let soi = [];
   let rightClickPosition = { x: 0, y: 0 };
 
   // Charakterbogen constants
@@ -52,7 +54,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const starpointsmarkerB = document.getElementById("starpointsmarkerB");
 
   const buttons = document.querySelectorAll(".menu-btn");
-  const sheets = document.querySelectorAll(".sheet-window");
+  const statSheets = document.querySelectorAll(".sheet-window");
+  const combatSheets = document.querySelectorAll(".combatSheet");
 
   //shipsheet constants
   const shipSheet = document.querySelector(".shipsheet");
@@ -282,10 +285,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
   function toggleSheet(sheetId) {
     const sheet = document.getElementById(sheetId);
     const isDisplayed = sheet.style.display === "block";
-    // Alle Fenster schließen
-    sheets.forEach((s) => (s.style.display = "none"));
-    // Das angeklickte Fenster umschalten
-    sheet.style.display = isDisplayed ? "none" : "block";
+
+    if (sheet.classList.contains("combatSheet")) {
+      // Alle combatsheet Fenster schließen
+      combatSheets.forEach((s) => (s.style.display = "none"));
+      // Das angeklickte Fenster umschalten
+      sheet.style.display = isDisplayed ? "none" : "block";
+    } else if (sheet.classList.contains("sheet-window")) {
+      // Alle statsheet Fenster schließen
+      statSheets.forEach((s) => (s.style.display = "none"));
+      // Das angeklickte Fenster umschalten
+      sheet.style.display = isDisplayed ? "none" : "block";
+    }
 
     if (sheetId === "charSheet") {
       loadCharSheet();
@@ -677,6 +688,23 @@ document.addEventListener("DOMContentLoaded", (event) => {
     marker.style.visibility = "visible";
   }
 
+  //soi marker laden
+  const savedSoi = JSON.parse(localStorage.getItem("soi"));
+  if (savedSoi) {
+    soi = savedSoi;
+    soi.forEach((soiMarker) => {
+      const newSoiMarker = document.createElement("div");
+      newSoiMarker.className = "soiMarker";
+      newSoiMarker.id = soiMarker.soiId;
+      hexfield.appendChild(newSoiMarker);
+      soiCounter++;
+
+      newSoiMarker.style.left = `${soiMarker.x}px`;
+      newSoiMarker.style.top = `${soiMarker.y}px`;
+      newSoiMarker.addEventListener("click", removeSoiMarker);
+    });
+  }
+
   document.addEventListener("contextmenu", function (e) {
     e.preventDefault();
     const contextMenu = document.getElementById("contextMenu");
@@ -707,9 +735,47 @@ document.addEventListener("DOMContentLoaded", (event) => {
     localStorage.setItem("markerPosition", JSON.stringify({ x, y }));
   });
 
+  function removeSoiMarker(event) {
+    const markerId = event.target.id;
+    console.log(markerId);
+    const index = soi.findIndex((soimarker) => soimarker.soiId === markerId);
+    console.log(index);
+
+    if (index !== -1) {
+      soi.splice(index, 1); // Entfernt das Element aus dem Array
+      soiCounter--;
+      localStorage.setItem("soi", JSON.stringify(soi)); // Aktualisiert den LocalStorage
+    }
+    event.target.remove(); // Entfernt das Marker-Element aus dem DOM
+  }
+
   document
-    .getElementById("placeStation")
+    .getElementById("placeSoiMarker")
     .addEventListener("click", function (e) {
-      // Logik, um die Raumstation zu platzieren
+      // Logik, um die soi marker zu platzieren
+      soiCounter++;
+      const soiId = `soiMarker${soiCounter}`;
+
+      //neuen soiMarker erstellen
+      const newSoiMarker = document.createElement("div");
+      newSoiMarker.className = "soiMarker";
+      newSoiMarker.id = `soiMarker${soiCounter}`;
+      hexfield.appendChild(newSoiMarker);
+
+      newSoiMarker.addEventListener("click", removeSoiMarker);
+
+      // Position des Markers setzen
+      const rect = hexfield.getBoundingClientRect();
+      const x = rightClickPosition.x - rect.left - 30 / 2;
+      const y = rightClickPosition.y - rect.top - 30 / 2;
+
+      newSoiMarker.style.left = `${x}px`;
+      newSoiMarker.style.top = `${y}px`;
+      newSoiMarker.style.visibility = "visible";
+
+      // Position speichern
+
+      soi.push({ soiId, x, y });
+      localStorage.setItem("soi", JSON.stringify(soi));
     });
 });

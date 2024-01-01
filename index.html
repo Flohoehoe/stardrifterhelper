@@ -11,6 +11,9 @@
       <button class="menu-btn" data-sheet="charSheet">Charakter Sheet</button>
       <button class="menu-btn" data-sheet="shipSheet">Ship Sheet</button>
       <button class="menu-btn" data-sheet="shipCombat">Ship Combat</button>
+      <button class="menu-btn" data-sheet="characterCombat">
+        Character Combat
+      </button>
       <button class="menu-btn" data-sheet="tablesSheet">Tables Sheet</button>
     </div>
 
@@ -127,8 +130,11 @@
       </div>
     </div>
 
-    <div id="shipCombat" class="sheet-window">
+    <div id="shipCombat" class="combatSheet">
       <!-- Inhalt für Ship Combat -->
+    </div>
+    <div id="characterCombat" class="combatSheet">
+      <!-- Inhalt für Character Combat -->
     </div>
 
     <div id="tablesSheet" class="sheet-window">
@@ -143,8 +149,8 @@
 
     <div id="contextMenu" class="context-menu" style="display: none">
       <ul>
-        <li id="placeShip">Positioniere Raumschiff</li>
-        <li id="placeStation">Positioniere Point of Interest</li>
+        <li id="placeShip">Place Spaceship</li>
+        <li id="placeSoiMarker">Place Point of Interest</li>
         <!-- Weitere Menüpunkte hier hinzufügen -->
       </ul>
     </div>
