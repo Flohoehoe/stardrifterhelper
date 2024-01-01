@@ -431,6 +431,68 @@ body,
         pointer-events: none;
       }
 
+      .enemyShipWeaponMarker {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;}
+
+      .enemyShipDamageMarker {
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .deleteEnemyShipBtn {
+        position: relative;
+        top: 0.5%;
+        left: 96.5%;
+        transform: translate(-50%, -50%);
+        font-size: 14px;
+        text-align: left;
+        font-family: monospace;
+      }
+
+      .enemyShip {
+        background-image: url('./img/shipCombat.png');
+        background-size: cover;
+        position: relative;
+        height: 330px;
+        width: 680px;
+        margin-top: 2px;
+      }
+
+      .enemyShipProwessInput {
+        position: relative;
+        top: 69%;
+        left: 20.5%;
+        transform: translate(-50%, -50%);
+        gap: 17px;
+        display: flex;
+        flex-direction: column;
+        width: 28px;
+        height: 24px;
+      }
+
+      .enemyShipNameInput {
+        position: relative;
+        top: 18%;
+        left: 83%;
+        transform: translate(-50%, -50%);
+        gap: 17px;
+        display: flex;
+        flex-direction: column;
+        width: 150px;
+        height: 20px;
+      }
+
       .soiHexInputs {
         position: relative;
         top: 84%;
