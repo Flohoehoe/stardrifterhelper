@@ -90,8 +90,217 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const enemyShips = document.querySelector(".enemyShips");
 
   addEnemyShipBtn.addEventListener("click", generateEnemyShip);
-  // Helferfunktionen
 
+  //Character combat constants
+  let enemyCounter = 1;
+  const addEnemyBtn = document.getElementById("addEnemy");
+  const enemies = document.querySelector(".enemies");
+
+  addEnemyBtn.addEventListener("click", generateNewEnemy);
+  //---------------------------------------------------------Character Combat Sheet handling-------------------------------------------------------------
+  //update enemy in local storage
+  function updateEnemy(enemyId, enemyObj) {
+    const savedEnemies = JSON.parse(localStorage.getItem("enemies")) || [];
+    const index = savedEnemies.findIndex((enemy) => enemy.enemyId === enemyId);
+    if (index === -1) {
+      savedEnemies.push(enemyObj);
+    } else {
+      savedEnemies[index] = enemyObj;
+    }
+    localStorage.setItem("enemies", JSON.stringify(savedEnemies));
+  }
+
+  function generateEnemyElement({
+    enemyId,
+    damagex,
+    damagey,
+    weaponx,
+    weapony,
+    enemyName,
+    enemyProwess,
+  }) {
+    //create enemy
+    const newEnemy = document.createElement("div");
+    newEnemy.className = "enemy";
+    newEnemy.id = enemyId;
+    enemies.appendChild(newEnemy);
+
+    //create enemy damage marker
+    const newEnemyDamageMarker = document.createElement("div");
+    newEnemyDamageMarker.className = "enemyDamageMarker";
+    newEnemyDamageMarker.id = `enemyDamageMarker${enemyCounter}`;
+    newEnemy.appendChild(newEnemyDamageMarker);
+
+    //create enemy weapon marker
+    const newEnemyWeaponMarker = document.createElement("div");
+    newEnemyWeaponMarker.className = "enemyWeaponMarker";
+    newEnemyWeaponMarker.id = `enemyWeaponMarker${enemyCounter}`;
+    newEnemy.appendChild(newEnemyWeaponMarker);
+
+    //create enemy name input
+    const newEnemyNameInput = document.createElement("input");
+    newEnemyNameInput.className = "enemyNameInput";
+    newEnemyNameInput.id = `enemyNameInput${enemyCounter}`;
+    newEnemy.appendChild(newEnemyNameInput);
+
+    newEnemyNameInput.addEventListener("change", () => {
+      enemyName = newEnemyNameInput.value;
+      const newEnemyObj = {
+        enemyId,
+        damagex,
+        damagey,
+        weaponx,
+        weapony,
+        enemyName,
+        enemyProwess,
+      };
+      updateEnemy(enemyId, newEnemyObj);
+    });
+
+    //create enemy prowess input
+    const newEnemyProwessInput = document.createElement("input");
+    newEnemyProwessInput.className = "enemyProwessInput";
+    newEnemyProwessInput.id = `enemyProwessInput${enemyCounter}`;
+    newEnemy.appendChild(newEnemyProwessInput);
+
+    newEnemyProwessInput.addEventListener("change", () => {
+      enemyProwess = newEnemyProwessInput.value;
+      const newEnemyObj = {
+        enemyId,
+        damagex,
+        damagey,
+        weaponx,
+        weapony,
+        enemyName,
+        enemyProwess,
+      };
+      updateEnemy(enemyId, newEnemyObj);
+    });
+
+    //create delete button
+    const newEnemyDeleteBtn = document.createElement("button");
+    newEnemyDeleteBtn.className = "deleteEnemyBtn";
+    newEnemyDeleteBtn.id = `deleteEnemyBtn${enemyCounter}`;
+    newEnemyDeleteBtn.innerHTML = "X";
+    newEnemyDeleteBtn.addEventListener("click", (event) =>
+      deleteEnemy(event, enemyId)
+    );
+    newEnemy.appendChild(newEnemyDeleteBtn);
+
+    newEnemy.addEventListener("click", (e) => {
+      const rect = e.target.getBoundingClientRect();
+      const x = e.pageX - rect.left;
+      const y = e.pageY - rect.top;
+
+      if (y > 90 && y < 200) {
+        damagex = x - newEnemyDamageMarker.offsetWidth / 2;
+        damagey = y - newEnemyDamageMarker.offsetHeight / 2;
+
+        newEnemyDamageMarker.style.visibility = "visible";
+
+        newEnemyDamageMarker.style.left = `${damagex}px`;
+        newEnemyDamageMarker.style.top = `${damagey}px`;
+        const newEnemyObj = {
+          enemyId,
+          damagex,
+          damagey,
+          weaponx,
+          weapony,
+          enemyName,
+          enemyProwess,
+        };
+        updateEnemy(enemyId, newEnemyObj);
+      } else if (y > 30 && y < 75 && x < 460) {
+        weaponx = x - newEnemyWeaponMarker.offsetWidth / 2;
+        weapony = y - newEnemyWeaponMarker.offsetHeight / 2;
+
+        newEnemyWeaponMarker.style.visibility = "visible";
+
+        newEnemyWeaponMarker.style.left = `${weaponx}px`;
+        newEnemyWeaponMarker.style.top = `${weapony}px`;
+
+        const newEnemyObj = {
+          enemyId,
+          damagex,
+          damagey,
+          weaponx,
+          weapony,
+          enemyName,
+          enemyProwess,
+        };
+        updateEnemy(enemyId, newEnemyObj);
+      }
+      e.stopPropagation();
+    });
+  }
+
+  function generateNewEnemy() {
+    const enemyId = `enemy${enemyCounter}`;
+    enemyCounter++;
+    const damagex = 0;
+    const damagey = 0;
+    const weaponx = 0;
+    const weapony = 0;
+    const enemyName = "";
+    const enemyProwess = "";
+    const newEnemyObj = {
+      enemyId,
+      damagex,
+      damagey,
+      weaponx,
+      weapony,
+      enemyName,
+      enemyProwess,
+    };
+    generateEnemyElement(newEnemyObj);
+  }
+
+  //delete enemy
+  function deleteEnemy(e, enemyId) {
+    e.stopPropagation();
+    const enemies = JSON.parse(localStorage.getItem("enemies"));
+    localStorage.removeItem("enemies");
+    const enemy = document.getElementById(enemyId);
+    enemy.remove();
+    const index = enemies.findIndex((enemy) => enemy.enemyId === enemyId);
+    enemies.splice(index, 1);
+    localStorage.setItem("enemies", JSON.stringify(enemies));
+    if (enemies.length === 0) {
+      enemyCounter = 1;
+    }
+  }
+
+  //load character combat sheet
+  function loadEnemys() {
+    const savedEnemies = JSON.parse(localStorage.getItem("enemies"));
+    if (savedEnemies) {
+      savedEnemies.forEach((enemy) => {
+        console.log(JSON.stringify(enemy));
+        generateEnemyElement(enemy);
+        const newEnemy = document.getElementById(enemy.enemyId);
+        newEnemy.querySelector(".enemyWeaponMarker").style.visibility =
+          "visible";
+        newEnemy.querySelector(
+          ".enemyWeaponMarker"
+        ).style.left = `${enemy.weaponx}px`;
+        newEnemy.querySelector(
+          ".enemyWeaponMarker"
+        ).style.top = `${enemy.weapony}px`;
+        newEnemy.querySelector(".enemyNameInput").value = enemy.enemyName;
+        newEnemy.querySelector(".enemyProwessInput").value = enemy.enemyProwess;
+        newEnemy.querySelector(".enemyDamageMarker").style.visibility =
+          "visible";
+        newEnemy.querySelector(
+          ".enemyDamageMarker"
+        ).style.left = `${enemy.damagex}px`;
+        newEnemy.querySelector(
+          ".enemyDamageMarker"
+        ).style.top = `${enemy.damagey}px`;
+      });
+    }
+  }
+
+  //---------------------------------------------------------Ship Combat Sheet handling-------------------------------------------------------------
   //update enemy ship in local storage
   function updateEnemyShip(shipId, shipObj) {
     const savedEnemyShips =
@@ -105,7 +314,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
       savedEnemyShips[index] = shipObj;
     }
     localStorage.setItem("enemyShips", JSON.stringify(savedEnemyShips));
-    //enemyShips:"[{"enemyShipId":"enemyShip1","damagex":28,"damagey":111.60000610351562,"weaponx":291,"weapony":40.600006103515625,"enemyShipName":"test","enemyShipProwess":"2"},{"enemyShipId":"enemyShip2","damagex":21,"damagey":109.60000610351562,"weaponx":247,"weapony":40.600006103515625,"enemyShipName":"test2","enemyShipProwess":"2"}]"
   }
 
   function generateEnemyShip() {
@@ -263,10 +471,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   }
 
-  function saveSelection(key, value) {
-    localStorage.setItem(key, value);
-  }
-
   function loadEnemyShip({
     enemyShipId,
     damagex,
@@ -410,6 +614,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   }
 
+  //---------------------------------------------------------Player Ship Sheet handling-------------------------------------------------------------
+
   function loadShipSheet() {
     const shipName = localStorage.getItem("shipName");
     shipNameInput.value = shipName;
@@ -470,165 +676,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     soiEventNrInputE.value = localStorage.getItem("soiEventNrInputE");
   }
 
-  function loadCharSheet() {
-    const charaName = localStorage.getItem("characterName");
-    charName.value = charaName;
-
-    const savedhealthMarkerPosition = JSON.parse(
-      localStorage.getItem("healthmarkerPosition")
-    );
-    if (savedhealthMarkerPosition) {
-      healthmarker.style.left = `${savedhealthMarkerPosition.x}px`;
-      healthmarker.style.top = `${savedhealthMarkerPosition.y}px`;
-      healthmarker.style.visibility = "visible";
-    }
-
-    const savedmindMarkerPosition = JSON.parse(
-      localStorage.getItem("mindmarkerPosition")
-    );
-    if (savedmindMarkerPosition) {
-      mindMarker.style.left = `${savedmindMarkerPosition.x}px`;
-      mindMarker.style.top = `${savedmindMarkerPosition.y}px`;
-      mindMarker.style.visibility = "visible";
-    }
-
-    const saveddestinyMarkerPosition = JSON.parse(
-      localStorage.getItem("destinymarkerPosition")
-    );
-    if (saveddestinyMarkerPosition) {
-      destinyMarker.style.left = `${saveddestinyMarkerPosition.x}px`;
-      destinyMarker.style.top = `${saveddestinyMarkerPosition.y}px`;
-      destinyMarker.style.visibility = "visible";
-    }
-
-    const savednotorietyMarkerPosition = JSON.parse(
-      localStorage.getItem("notorietymarkerPosition")
-    );
-    if (savednotorietyMarkerPosition) {
-      notorietyMarker.style.left = `${savednotorietyMarkerPosition.x}px`;
-      notorietyMarker.style.top = `${savednotorietyMarkerPosition.y}px`;
-      notorietyMarker.style.visibility = "visible";
-    }
-
-    const saveddefaultWeaponMarkerPosition = JSON.parse(
-      localStorage.getItem("defaultWeaponMarkerPosition")
-    );
-    if (saveddefaultWeaponMarkerPosition) {
-      defaultWeaponMarker.style.left = `${saveddefaultWeaponMarkerPosition.x}px`;
-      defaultWeaponMarker.style.top = `${saveddefaultWeaponMarkerPosition.y}px`;
-      defaultWeaponMarker.style.visibility = "visible";
-    }
-
-    const savedweaponAMarkerPosition = JSON.parse(
-      localStorage.getItem("weaponAMarkerPosition")
-    );
-    if (savedweaponAMarkerPosition) {
-      weaponAMarker.style.left = `${savedweaponAMarkerPosition.x}px`;
-      weaponAMarker.style.top = `${savedweaponAMarkerPosition.y}px`;
-      weaponAMarker.style.visibility = "visible";
-    }
-
-    const savedweaponBMarkerPosition = JSON.parse(
-      localStorage.getItem("weaponBMarkerPosition")
-    );
-    if (savedweaponBMarkerPosition) {
-      weaponBMarker.style.left = `${savedweaponBMarkerPosition.x}px`;
-      weaponBMarker.style.top = `${savedweaponBMarkerPosition.y}px`;
-      weaponBMarker.style.visibility = "visible";
-    }
-    weaponAInput.value = localStorage.getItem("weaponA");
-    weaponBInput.value = localStorage.getItem("weaponB");
-
-    // Auxilliary Namen
-    auxillaryNameA.value = localStorage.getItem("auxillaryNameA");
-    auxillaryNameB.value = localStorage.getItem("auxillaryNameB");
-    auxillaryNameC.value = localStorage.getItem("auxillaryNameC");
-    auxillaryNameD.value = localStorage.getItem("auxillaryNameD");
-    auxillaryNameE.value = localStorage.getItem("auxillaryNameE");
-
-    // Auxilliary Events
-    auxillaryEventA.value = localStorage.getItem("auxillaryEventA");
-    auxillaryEventB.value = localStorage.getItem("auxillaryEventB");
-    auxillaryEventC.value = localStorage.getItem("auxillaryEventC");
-    auxillaryEventD.value = localStorage.getItem("auxillaryEventD");
-    auxillaryEventE.value = localStorage.getItem("auxillaryEventE");
-
-    // Lucre
-    const savedlucreMarkerAPosition = JSON.parse(
-      localStorage.getItem("lucreMarkerAPosition")
-    );
-    if (savedlucreMarkerAPosition) {
-      lucreMarkerA.style.left = `${savedlucreMarkerAPosition.x}px`;
-      lucreMarkerA.style.top = `${savedlucreMarkerAPosition.y}px`;
-      lucreMarkerA.style.visibility = "visible";
-    }
-
-    const savedlucreMarkerBPosition = JSON.parse(
-      localStorage.getItem("lucreMarkerBPosition")
-    );
-    if (savedlucreMarkerBPosition) {
-      lucreMarkerB.style.left = `${savedlucreMarkerBPosition.x}px`;
-      lucreMarkerB.style.top = `${savedlucreMarkerBPosition.y}px`;
-      lucreMarkerB.style.visibility = "visible";
-    }
-
-    const savedlucreMarkerCPosition = JSON.parse(
-      localStorage.getItem("lucreMarkerCPosition")
-    );
-    if (savedlucreMarkerCPosition) {
-      lucreMarkerC.style.left = `${savedlucreMarkerCPosition.x}px`;
-      lucreMarkerC.style.top = `${savedlucreMarkerCPosition.y}px`;
-      lucreMarkerC.style.visibility = "visible";
-    }
-
-    // Starpoints
-    const savedstarpointsmarkerAPosition = JSON.parse(
-      localStorage.getItem("starpointsmarkerAPosition")
-    );
-    if (savedstarpointsmarkerAPosition) {
-      starpointsmarkerA.style.left = `${savedstarpointsmarkerAPosition.x}px`;
-      starpointsmarkerA.style.top = `${savedstarpointsmarkerAPosition.y}px`;
-      starpointsmarkerA.style.visibility = "visible";
-    }
-
-    const savedstarpointsmarkerBPosition = JSON.parse(
-      localStorage.getItem("starpointsmarkerBPosition")
-    );
-    if (savedstarpointsmarkerBPosition) {
-      starpointsmarkerB.style.left = `${savedstarpointsmarkerBPosition.x}px`;
-      starpointsmarkerB.style.top = `${savedstarpointsmarkerBPosition.y}px`;
-      starpointsmarkerB.style.visibility = "visible";
-    }
-  }
-
-  //menübar und sheets
-  function toggleSheet(sheetId) {
-    const sheet = document.getElementById(sheetId);
-    const isDisplayed = sheet.style.display === "block";
-
-    if (sheet.classList.contains("combatSheet")) {
-      // Alle combatsheet Fenster schließen
-      combatSheets.forEach((s) => (s.style.display = "none"));
-      // Das angeklickte Fenster umschalten
-      sheet.style.display = isDisplayed ? "none" : "block";
-    } else if (sheet.classList.contains("sheet-window")) {
-      // Alle statsheet Fenster schließen
-      statSheets.forEach((s) => (s.style.display = "none"));
-      // Das angeklickte Fenster umschalten
-      sheet.style.display = isDisplayed ? "none" : "block";
-    }
-
-    if (sheetId === "charSheet") {
-      loadCharSheet();
-    } else if (sheetId === "shipSheet") {
-      loadShipSheet();
-    } else if (sheetId === "shipCombat") {
-      loadShipCombat();
-    }
-  }
-
-  // ship sheet events
-
+  //ship sheet events
   shipNameInput.addEventListener("change", () => {
     const shipName = shipNameInput.value;
     saveSelection("shipName", shipName);
@@ -761,6 +809,139 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const soiEventNrInputESaved = soiEventNrInputE.value;
     saveSelection("soiEventNrInputE", soiEventNrInputESaved);
   });
+
+  //---------------------------------------------------------Charakter Sheet handling-------------------------------------------------------------
+
+  function loadCharSheet() {
+    const charaName = localStorage.getItem("characterName");
+    charName.value = charaName;
+
+    const savedhealthMarkerPosition = JSON.parse(
+      localStorage.getItem("healthmarkerPosition")
+    );
+    if (savedhealthMarkerPosition) {
+      healthmarker.style.left = `${savedhealthMarkerPosition.x}px`;
+      healthmarker.style.top = `${savedhealthMarkerPosition.y}px`;
+      healthmarker.style.visibility = "visible";
+    }
+
+    const savedmindMarkerPosition = JSON.parse(
+      localStorage.getItem("mindmarkerPosition")
+    );
+    if (savedmindMarkerPosition) {
+      mindMarker.style.left = `${savedmindMarkerPosition.x}px`;
+      mindMarker.style.top = `${savedmindMarkerPosition.y}px`;
+      mindMarker.style.visibility = "visible";
+    }
+
+    const saveddestinyMarkerPosition = JSON.parse(
+      localStorage.getItem("destinymarkerPosition")
+    );
+    if (saveddestinyMarkerPosition) {
+      destinyMarker.style.left = `${saveddestinyMarkerPosition.x}px`;
+      destinyMarker.style.top = `${saveddestinyMarkerPosition.y}px`;
+      destinyMarker.style.visibility = "visible";
+    }
+
+    const savednotorietyMarkerPosition = JSON.parse(
+      localStorage.getItem("notorietymarkerPosition")
+    );
+    if (savednotorietyMarkerPosition) {
+      notorietyMarker.style.left = `${savednotorietyMarkerPosition.x}px`;
+      notorietyMarker.style.top = `${savednotorietyMarkerPosition.y}px`;
+      notorietyMarker.style.visibility = "visible";
+    }
+
+    const saveddefaultWeaponMarkerPosition = JSON.parse(
+      localStorage.getItem("defaultWeaponMarkerPosition")
+    );
+    if (saveddefaultWeaponMarkerPosition) {
+      defaultWeaponMarker.style.left = `${saveddefaultWeaponMarkerPosition.x}px`;
+      defaultWeaponMarker.style.top = `${saveddefaultWeaponMarkerPosition.y}px`;
+      defaultWeaponMarker.style.visibility = "visible";
+    }
+
+    const savedweaponAMarkerPosition = JSON.parse(
+      localStorage.getItem("weaponAMarkerPosition")
+    );
+    if (savedweaponAMarkerPosition) {
+      weaponAMarker.style.left = `${savedweaponAMarkerPosition.x}px`;
+      weaponAMarker.style.top = `${savedweaponAMarkerPosition.y}px`;
+      weaponAMarker.style.visibility = "visible";
+    }
+
+    const savedweaponBMarkerPosition = JSON.parse(
+      localStorage.getItem("weaponBMarkerPosition")
+    );
+    if (savedweaponBMarkerPosition) {
+      weaponBMarker.style.left = `${savedweaponBMarkerPosition.x}px`;
+      weaponBMarker.style.top = `${savedweaponBMarkerPosition.y}px`;
+      weaponBMarker.style.visibility = "visible";
+    }
+    weaponAInput.value = localStorage.getItem("weaponA");
+    weaponBInput.value = localStorage.getItem("weaponB");
+
+    // Auxilliary Namen
+    auxillaryNameA.value = localStorage.getItem("auxillaryNameA");
+    auxillaryNameB.value = localStorage.getItem("auxillaryNameB");
+    auxillaryNameC.value = localStorage.getItem("auxillaryNameC");
+    auxillaryNameD.value = localStorage.getItem("auxillaryNameD");
+    auxillaryNameE.value = localStorage.getItem("auxillaryNameE");
+
+    // Auxilliary Events
+    auxillaryEventA.value = localStorage.getItem("auxillaryEventA");
+    auxillaryEventB.value = localStorage.getItem("auxillaryEventB");
+    auxillaryEventC.value = localStorage.getItem("auxillaryEventC");
+    auxillaryEventD.value = localStorage.getItem("auxillaryEventD");
+    auxillaryEventE.value = localStorage.getItem("auxillaryEventE");
+
+    // Lucre
+    const savedlucreMarkerAPosition = JSON.parse(
+      localStorage.getItem("lucreMarkerAPosition")
+    );
+    if (savedlucreMarkerAPosition) {
+      lucreMarkerA.style.left = `${savedlucreMarkerAPosition.x}px`;
+      lucreMarkerA.style.top = `${savedlucreMarkerAPosition.y}px`;
+      lucreMarkerA.style.visibility = "visible";
+    }
+
+    const savedlucreMarkerBPosition = JSON.parse(
+      localStorage.getItem("lucreMarkerBPosition")
+    );
+    if (savedlucreMarkerBPosition) {
+      lucreMarkerB.style.left = `${savedlucreMarkerBPosition.x}px`;
+      lucreMarkerB.style.top = `${savedlucreMarkerBPosition.y}px`;
+      lucreMarkerB.style.visibility = "visible";
+    }
+
+    const savedlucreMarkerCPosition = JSON.parse(
+      localStorage.getItem("lucreMarkerCPosition")
+    );
+    if (savedlucreMarkerCPosition) {
+      lucreMarkerC.style.left = `${savedlucreMarkerCPosition.x}px`;
+      lucreMarkerC.style.top = `${savedlucreMarkerCPosition.y}px`;
+      lucreMarkerC.style.visibility = "visible";
+    }
+
+    // Starpoints
+    const savedstarpointsmarkerAPosition = JSON.parse(
+      localStorage.getItem("starpointsmarkerAPosition")
+    );
+    if (savedstarpointsmarkerAPosition) {
+      starpointsmarkerA.style.left = `${savedstarpointsmarkerAPosition.x}px`;
+      starpointsmarkerA.style.top = `${savedstarpointsmarkerAPosition.y}px`;
+      starpointsmarkerA.style.visibility = "visible";
+    }
+
+    const savedstarpointsmarkerBPosition = JSON.parse(
+      localStorage.getItem("starpointsmarkerBPosition")
+    );
+    if (savedstarpointsmarkerBPosition) {
+      starpointsmarkerB.style.left = `${savedstarpointsmarkerBPosition.x}px`;
+      starpointsmarkerB.style.top = `${savedstarpointsmarkerBPosition.y}px`;
+      starpointsmarkerB.style.visibility = "visible";
+    }
+  }
 
   charName.addEventListener("change", () => {
     const characterName = charName.value;
@@ -994,6 +1175,43 @@ document.addEventListener("DOMContentLoaded", (event) => {
       );
     }
   });
+
+  //---------------------------------------------------------General handling-------------------------------------------------------------
+
+  function saveSelection(key, value) {
+    localStorage.setItem(key, value);
+  }
+
+  //menübar und sheets
+  function toggleSheet(sheetId) {
+    console.log(sheetId);
+    const sheet = document.getElementById(sheetId);
+    const isDisplayed = sheet.style.display === "block";
+
+    if (sheet.classList.contains("combatSheet")) {
+      // Alle combatsheet Fenster schließen
+      combatSheets.forEach((s) => (s.style.display = "none"));
+      // Das angeklickte Fenster umschalten
+      sheet.style.display = isDisplayed ? "none" : "block";
+    } else if (sheet.classList.contains("sheet-window")) {
+      // Alle statsheet Fenster schließen
+      statSheets.forEach((s) => (s.style.display = "none"));
+      // Das angeklickte Fenster umschalten
+      sheet.style.display = isDisplayed ? "none" : "block";
+    }
+
+    if (sheetId === "charSheet") {
+      loadCharSheet();
+    } else if (sheetId === "shipSheet") {
+      loadShipSheet();
+    } else if (sheetId === "shipCombat") {
+      console.log("ship combat");
+      loadShipCombat();
+    } else if (sheetId === "characterCombat") {
+      console.log("character combat");
+      loadEnemys();
+    }
+  }
 
   buttons.forEach((btn) => {
     btn.addEventListener("click", function () {

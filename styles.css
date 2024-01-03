@@ -469,6 +469,68 @@ body,
         margin-top: 2px;
       }
 
+      .deleteEnemyBtn {
+        position: relative;
+        top: 0.5%;
+        left: 96.5%;
+        transform: translate(-50%, -50%);
+        font-size: 14px;
+        text-align: left;
+        font-family: monospace;
+      }
+
+      .enemyProwessInput {
+        position: relative;
+        top: 70%;
+        left: 19.5%;
+        transform: translate(-50%, -50%);
+        gap: 17px;
+        display: flex;
+        flex-direction: column;
+        width: 28px;
+        height: 24px;
+      }
+
+      .enemyNameInput {
+        position: relative;
+        top: 23.3%;
+        left: 81%;
+        transform: translate(-50%, -50%);
+        gap: 17px;
+        display: flex;
+        flex-direction: column;
+        width: 150px;
+        height: 20px;
+      }
+
+      .enemyWeaponMarker {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;}
+
+      .enemyDamageMarker {
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        background-image: url("./img/marker.png");
+        background-size: cover;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .enemy {
+        background-image: url('./img/characterCombat.png');
+        background-size: cover;
+        position: relative;
+        height: 280px;
+        width: 680px;
+        margin-top: 2px;
+      }
+
       .enemyShipProwessInput {
         position: relative;
         top: 69%;
