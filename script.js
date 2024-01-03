@@ -104,7 +104,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     } else {
       savedEnemyShips[index] = shipObj;
     }
-    console.log("dating localStorage ships up");
     localStorage.setItem("enemyShips", JSON.stringify(savedEnemyShips));
     //enemyShips:"[{"enemyShipId":"enemyShip1","damagex":28,"damagey":111.60000610351562,"weaponx":291,"weapony":40.600006103515625,"enemyShipName":"test","enemyShipProwess":"2"},{"enemyShipId":"enemyShip2","damagex":21,"damagey":109.60000610351562,"weaponx":247,"weapony":40.600006103515625,"enemyShipName":"test2","enemyShipProwess":"2"}]"
   }
@@ -155,9 +154,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     newEnemyShipDeleteBtn.className = "deleteEnemyShipBtn";
     newEnemyShipDeleteBtn.id = `deleteEnemyShipBtn${enemyShipCounter}`;
     newEnemyShipDeleteBtn.innerHTML = "X";
-    newEnemyShipDeleteBtn.addEventListener(
-      "click",
-      deleteEnemyShip.bind(null, enemyShipId)
+    newEnemyShipDeleteBtn.addEventListener("click", (event) =>
+      deleteEnemyShip(event, enemyShipId)
     );
     newEnemyShip.appendChild(newEnemyShipDeleteBtn);
 
@@ -184,10 +182,176 @@ document.addEventListener("DOMContentLoaded", (event) => {
           enemyShipProwess,
         };
         updateEnemyShip(enemyShipId, newEnemyShipObj);
-      } else if (y > 30 && y < 75) {
+      } else if (y > 30 && y < 75 && x < 460) {
         weaponx = x - newEnemyShipWeaponMarker.offsetWidth / 2;
         weapony = y - newEnemyShipWeaponMarker.offsetHeight / 2;
 
+        newEnemyShipWeaponMarker.style.visibility = "visible";
+
+        newEnemyShipWeaponMarker.style.left = `${weaponx}px`;
+        newEnemyShipWeaponMarker.style.top = `${weapony}px`;
+
+        const newEnemyShipObj = {
+          enemyShipId,
+          damagex,
+          damagey,
+          weaponx,
+          weapony,
+          enemyShipName,
+          enemyShipProwess,
+        };
+        updateEnemyShip(enemyShipId, newEnemyShipObj);
+      }
+      e.stopPropagation();
+    });
+
+    newEnemyShipNameInput.addEventListener("change", () => {
+      enemyShipName = newEnemyShipNameInput.value;
+      const newEnemyShipObj = {
+        enemyShipId,
+        damagex,
+        damagey,
+        weaponx,
+        weapony,
+        enemyShipName,
+        enemyShipProwess,
+      };
+      updateEnemyShip(enemyShipId, newEnemyShipObj);
+    });
+
+    newEnemyShipProwessInput.addEventListener("change", () => {
+      enemyShipProwess = newEnemyShipProwessInput.value;
+      const newEnemyShipObj = {
+        enemyShipId,
+        damagex,
+        damagey,
+        weaponx,
+        weapony,
+        enemyShipName,
+        enemyShipProwess,
+      };
+      updateEnemyShip(enemyShipId, newEnemyShipObj);
+    });
+
+    enemyShipCounter++;
+    const newEnemyShipObj = {
+      enemyShipId,
+      damagex,
+      damagey,
+      weaponx,
+      weapony,
+      enemyShipName,
+      enemyShipProwess,
+    };
+    updateEnemyShip(enemyShipId, newEnemyShipObj);
+  }
+
+  //delete enemy ship
+  function deleteEnemyShip(e, shipId) {
+    e.stopPropagation();
+    const ships = JSON.parse(localStorage.getItem("enemyShips"));
+    localStorage.removeItem("enemyShips");
+    const ship = document.getElementById(shipId);
+    ship.remove();
+    const index = ships.findIndex(
+      (enemyShip) => enemyShip.enemyShipId === shipId
+    );
+    ships.splice(index, 1);
+    localStorage.setItem("enemyShips", JSON.stringify(ships));
+    if (ships.length === 0) {
+      enemyShipCounter = 1;
+    }
+  }
+
+  function saveSelection(key, value) {
+    localStorage.setItem(key, value);
+  }
+
+  function loadEnemyShip({
+    enemyShipId,
+    damagex,
+    damagey,
+    weaponx,
+    weapony,
+    enemyShipName,
+    enemyShipProwess,
+  }) {
+    //create enemy ship
+    const newEnemyShip = document.createElement("div");
+    newEnemyShip.className = "enemyShip";
+    newEnemyShip.id = enemyShipId;
+    enemyShips.appendChild(newEnemyShip);
+
+    //create enemy ship damage marker
+    const newEnemyShipDamageMarker = document.createElement("div");
+    newEnemyShipDamageMarker.className = "enemyShipDamageMarker";
+    newEnemyShipDamageMarker.id = `enemyShipDamageMarker${enemyShipCounter}`;
+    newEnemyShip.appendChild(newEnemyShipDamageMarker);
+    newEnemyShipDamageMarker.style.visibility = "visible";
+    newEnemyShipDamageMarker.style.left = `${damagex}px`;
+    newEnemyShipDamageMarker.style.top = `${damagey}px`;
+
+    //create enemy ship weapon marker
+    const newEnemyShipWeaponMarker = document.createElement("div");
+    newEnemyShipWeaponMarker.className = "enemyShipWeaponMarker";
+    newEnemyShipWeaponMarker.id = `enemyShipWeaponMarker${enemyShipCounter}`;
+    newEnemyShip.appendChild(newEnemyShipWeaponMarker);
+    newEnemyShipWeaponMarker.style.visibility = "visible";
+    newEnemyShipWeaponMarker.style.left = `${weaponx}px`;
+    newEnemyShipWeaponMarker.style.top = `${weapony}px`;
+
+    //create enemy ship name input
+    const newEnemyShipNameInput = document.createElement("input");
+    newEnemyShipNameInput.className = "enemyShipNameInput";
+    newEnemyShipNameInput.id = `enemyShipNameInput${enemyShipCounter}`;
+    newEnemyShip.appendChild(newEnemyShipNameInput);
+
+    newEnemyShipNameInput.value = enemyShipName;
+
+    //create enemy ship prowess input
+    const newEnemyShipProwessInput = document.createElement("input");
+    newEnemyShipProwessInput.className = "enemyShipProwessInput";
+    newEnemyShipProwessInput.id = `enemyShipProwessInput${enemyShipCounter}`;
+    newEnemyShip.appendChild(newEnemyShipProwessInput);
+
+    newEnemyShipProwessInput.value = enemyShipProwess;
+
+    //create delete button
+    const newEnemyShipDeleteBtn = document.createElement("button");
+    newEnemyShipDeleteBtn.className = "deleteEnemyShipBtn";
+    newEnemyShipDeleteBtn.id = `deleteEnemyShipBtn${enemyShipCounter}`;
+    newEnemyShipDeleteBtn.innerHTML = "X";
+    newEnemyShipDeleteBtn.addEventListener("click", (event) =>
+      deleteEnemyShip(event, enemyShipId)
+    );
+    newEnemyShip.appendChild(newEnemyShipDeleteBtn);
+
+    newEnemyShip.addEventListener("click", (e) => {
+      const rect = e.target.getBoundingClientRect();
+      const x = e.pageX - rect.left;
+      const y = e.pageY - rect.top;
+
+      if (y > 90 && y < 200) {
+        damagex = x - newEnemyShipDamageMarker.offsetWidth / 2;
+        damagey = y - newEnemyShipDamageMarker.offsetHeight / 2;
+
+        newEnemyShipDamageMarker.style.visibility = "visible";
+
+        newEnemyShipDamageMarker.style.left = `${damagex}px`;
+        newEnemyShipDamageMarker.style.top = `${damagey}px`;
+        const newEnemyShipObj = {
+          enemyShipId,
+          damagex,
+          damagey,
+          weaponx,
+          weapony,
+          enemyShipName,
+          enemyShipProwess,
+        };
+        updateEnemyShip(enemyShipId, newEnemyShipObj);
+      } else if (y > 30 && y < 75 && x < 460) {
+        weaponx = x - newEnemyShipWeaponMarker.offsetWidth / 2;
+        weapony = y - newEnemyShipWeaponMarker.offsetHeight / 2;
         newEnemyShipWeaponMarker.style.visibility = "visible";
 
         newEnemyShipWeaponMarker.style.left = `${weaponx}px`;
@@ -235,40 +399,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
     });
 
     enemyShipCounter++;
-    const newEnemyShipObj = {
-      enemyShipId,
-      damagex,
-      damagey,
-      weaponx,
-      weapony,
-      enemyShipName,
-      enemyShipProwess,
-    };
-    updateEnemyShip(enemyShipId, newEnemyShipObj);
   }
 
-  //delete enemy ship
-  function deleteEnemyShip(shipId) {
-    //console.log("ship deleted: ", shipId);
-    const ships = JSON.parse(localStorage.getItem("enemyShips"));
-    localStorage.removeItem("enemyShips");
-    console.log("array vor löschen: ", JSON.stringify(ships));
-    const ship = document.getElementById(shipId);
-    ship.remove();
-    const index = ships.findIndex(
-      (enemyShip) => enemyShip.enemyShipId === shipId
-    );
-    console.log("index: ", index);
-    ships.splice(index, 1);
-    console.log("array nach löschen: ", JSON.stringify(ships));
-    localStorage.setItem("enemyShips", JSON.stringify(ships));
-    if (ships.length === 0) {
-      enemyShipCounter = 1;
+  function loadShipCombat() {
+    const savedEnemyShips = JSON.parse(localStorage.getItem("enemyShips"));
+    if (savedEnemyShips) {
+      savedEnemyShips.forEach((ship) => {
+        loadEnemyShip(ship);
+      });
     }
-  }
-
-  function saveSelection(key, value) {
-    localStorage.setItem(key, value);
   }
 
   function loadShipSheet() {
@@ -483,6 +622,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
       loadCharSheet();
     } else if (sheetId === "shipSheet") {
       loadShipSheet();
+    } else if (sheetId === "shipCombat") {
+      loadShipCombat();
     }
   }
 
