@@ -141,8 +141,12 @@
       <!-- Inhalt für Character Combat -->
     </div>
 
-    <div id="tablesSheet" class="sheet-window">
-      <!-- Inhalt für Tables Sheet -->
+    <div id="log" class="sheet-window">
+      <!-- Inhalt für log Sheet -->
+    </div>
+
+    <div id="tutorial" class="sheet-window">
+      <!-- Inhalt für tutorial Sheet -->
     </div>
 
     <div id="hexfield">
@@ -159,6 +163,39 @@
       </ul>
     </div>
 
-    <script src="script.js"></script>
+    <div class="diceroller">
+      <ul class="diceoutput">
+        <li class="diceoutputitem">1d100 = 94</li>
+        <li class="diceoutputitem">2d6 = 6</li>
+      </ul>
+      <div class="dicemenu">
+        <div class="diceinputs">
+          <label class="dicelabel" for="diceamount" id="diceamountLabel"
+            >Dice:
+          </label>
+          <input
+            class="diceinput"
+            type="text"
+            id="diceamount"
+            placeholder="1"
+            value="1"
+          />
+          <label class="dicelabel" for="dicetype" id="diceamountLabel"
+            >d
+          </label>
+          <input
+            class="diceinput"
+            type="text"
+            id="dicetype"
+            placeholder="10"
+            value="10"
+          />
+        </div>
+        <button class="dice-btn" id="roll">roll</button>
+        <button class="dice-btn" id="rolld100">roll 1d100</button>
+      </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
   </body>
 </html>

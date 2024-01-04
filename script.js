@@ -1,3 +1,5 @@
+import { rollMultipleDice } from "./diceRoller.js";
+
 document.addEventListener("DOMContentLoaded", (event) => {
   // Map und Marker constants
   const hexfield = document.getElementById("hexfield");
@@ -97,6 +99,49 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const enemies = document.querySelector(".enemies");
 
   addEnemyBtn.addEventListener("click", generateNewEnemy);
+
+  //---------------------------------------------------------dice handling-------------------------------------------------------------
+  const diceOutput = document.querySelector(".diceoutput");
+  const diceAmountInput = document.getElementById("diceamount");
+  const diceTypeInput = document.getElementById("dicetype");
+  const rollDiceBtn = document.getElementById("roll");
+  const rolld100 = document.getElementById("rolld100");
+
+  function fromatDiceOutput(diceAmount, diceType, dice) {
+    let diceString = "";
+    if (diceAmount > 1) {
+      const diceSum = dice.reduce((a, b) => a + b, 0);
+      diceString = `${diceAmount}d${diceType} = ${dice.join(
+        ", "
+      )} = ${diceSum}`;
+    } else {
+      diceString = `${diceAmount}d${diceType} = ${dice.join(", ")}`;
+    }
+    return diceString;
+  }
+
+  rollDiceBtn.addEventListener("click", () => {
+    const diceAmount = diceAmountInput.value;
+    const diceType = diceTypeInput.value;
+    const dice = rollMultipleDice(diceAmount, diceType);
+    const li = document.createElement("li");
+    li.innerText = fromatDiceOutput(diceAmount, diceType, dice);
+    li.classList.add("diceoutputitem");
+    diceOutput.append(li);
+    diceOutput.scrollTop = diceOutput.scrollHeight;
+  });
+
+  rolld100.addEventListener("click", () => {
+    const diceAmount = 1;
+    const diceType = 100;
+    const dice = rollMultipleDice(diceAmount, diceType);
+    const li = document.createElement("li");
+    li.innerText = fromatDiceOutput(diceAmount, diceType, dice);
+    li.classList.add("diceoutputitem");
+    diceOutput.append(li);
+    diceOutput.scrollTop = diceOutput.scrollHeight;
+  });
+
   //---------------------------------------------------------Character Combat Sheet handling-------------------------------------------------------------
   //update enemy in local storage
   function updateEnemy(enemyId, enemyObj) {
