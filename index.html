@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Star Drifters Helper</title>
+    <title>Star Drifter's Helper</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -14,7 +14,8 @@
       <button class="menu-btn" data-sheet="characterCombat">
         Character Combat
       </button>
-      <button class="menu-btn" data-sheet="tablesSheet">Tables Sheet</button>
+      <button class="menu-btn" data-sheet="log">Captain's Log</button>
+      <button class="menu-btn" data-sheet="tutorial">How to play...</button>
     </div>
 
     <div id="charSheet" class="sheet-window">
@@ -133,24 +134,98 @@
     <div id="shipCombat" class="combatSheet">
       <!-- Inhalt für Ship Combat -->
       <div class="enemyShips"></div>
-      <button id="addEnemyShip">+ Enemy Ship</button>
+      <button class="addCombatant" id="addEnemyShip">+ Enemy Ship</button>
     </div>
     <div id="characterCombat" class="combatSheet">
       <div class="enemies"></div>
-      <button id="addEnemy">+ Enemy</button>
+      <button class="addCombatant" id="addEnemy">+ Enemy</button>
       <!-- Inhalt für Character Combat -->
     </div>
 
     <div id="log" class="sheet-window">
       <!-- Inhalt für log Sheet -->
+      <ul class="loglist"></ul>
+      <div class="logMenu">
+        <div class="logInputs">
+          <label for="logEventInput" class="logInputLabel">Event: </label>
+          <input type="text" id="logEventInput" />
+          <label for="logInput" class="logInputLabel">Notes: </label>
+          <input type="text" id="logInput" />
+        </div>
+        <div class="logButtons">
+          <button class="logBtn" id="exportLogBtn">Export Log as txt</button>
+          <button class="logBtn" id="logBtn">Enter Logentry</button>
+        </div>
+      </div>
     </div>
 
     <div id="tutorial" class="sheet-window">
       <!-- Inhalt für tutorial Sheet -->
+      <h2>
+        Welcome to the unofficial Companion Web App for "Star Drifter" by Ken
+        Kennedy!
+      </h2>
+      <p>
+        If you want to play the game, you need to buy Star Drifter by Ken
+        Kennedy either as PDF or Softcover on
+        <a
+          href="https://preview.drivethrurpg.com/en/product/432244/star-drifter"
+          target="_blank"
+          rel="noopener noreferrer"
+          >DriveThruRPG</a
+        >.
+      </p>
+      <p>
+        This web application is designed as an aid for playing the exciting game
+        of Star Drifter. It allows you to conveniently track your progress,
+        manage character and ship stats, and record the thrilling encounters and
+        battles that unfold during your adventures.
+      </p>
+
+      <h2>Here's a quick guide to get you started:</h2>
+      <ul>
+        <li>
+          <strong>Character & Spaceship:</strong> Keep tabs on your character's
+          prowess and your ship's capabilities by logging their attributes and
+          stats on their respective sheets. Additionally, you can right-click on
+          the star map to place markers for your spaceship or Sectors of
+          Interest, allowing for easy navigation and tracking of key locations.
+        </li>
+
+        <li>
+          <strong>Combat Sheets:</strong> Engage in battles with confidence,
+          knowing you can mark each encounter's outcomes, strategies, and
+          tactics used on the combat sheet.
+        </li>
+        <li>
+          <strong>Persistence:</strong> Our app uses browser localStorage to
+          keep your data safe and sound. This means that everything you input
+          into the app will be saved, and your game progress is preserved even
+          after you close your browser. Just make sure cookies are enabled in
+          your browser settings to ensure the storage works correctly.
+        </li>
+        <li>
+          <strong>Logbook Export:</strong> Want to keep a permanent record of
+          your Star Drifter escapades? The logbook feature allows you to export
+          your entries into a .txt file, making it easy to document your journey
+          and share it with fellow drifters.
+        </li>
+        <li>
+          <strong>Reset Game:</strong> Ready to start a new adventure? Clicking
+          on "reset game" will clear all data from the app's memory. Please note
+          that this action is irreversible, so be sure to export your logbook if
+          you wish to save your game's history before starting anew.
+        </li>
+      </ul>
+
+      <p>
+        Enjoy your journey through the Star Drifter universe, and may the stars
+        guide you to victory!
+      </p>
     </div>
 
     <div id="hexfield">
-      <h1>Star Drifters Helper</h1>
+      <h1>Star Drifter's Helper</h1>
       <img src="img/grid.jpg" alt="Hexfeld" />
       <div id="marker"></div>
     </div>
@@ -158,7 +233,7 @@
     <div id="contextMenu" class="context-menu" style="display: none">
       <ul>
         <li id="placeShip">Place Spaceship</li>
-        <li id="placeSoiMarker">Place Point of Interest</li>
+        <li id="placeSoiMarker">Place Sector of Interest</li>
         <!-- Weitere Menüpunkte hier hinzufügen -->
       </ul>
     </div>
@@ -192,7 +267,12 @@
         <button class="dice-btn" id="rolld100">roll 1d100</button>
       </div>
     </div>
+    <footer>
+      <a href="./impressum.html" target="_blank" rel="noopener noreferrer"
+        >Impressum</a
+      >
+    </footer>
 
-    <script type="module" src="script.js"></script>
+    <script defer type="module" src="script.js"></script>
   </body>
 </html>

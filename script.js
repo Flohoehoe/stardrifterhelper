@@ -1,4 +1,5 @@
-import { rollMultipleDice } from "./diceRoller.js";
+import { rollMultipleDice } from "./utils/diceRoller.js";
+import * as Log from "./utils/log.js";
 
 document.addEventListener("DOMContentLoaded", (event) => {
   // Map und Marker constants
@@ -121,14 +122,30 @@ document.addEventListener("DOMContentLoaded", (event) => {
   }
 
   rollDiceBtn.addEventListener("click", () => {
-    const diceAmount = diceAmountInput.value;
-    const diceType = diceTypeInput.value;
-    const dice = rollMultipleDice(diceAmount, diceType);
-    const li = document.createElement("li");
-    li.innerText = fromatDiceOutput(diceAmount, diceType, dice);
-    li.classList.add("diceoutputitem");
-    diceOutput.append(li);
-    diceOutput.scrollTop = diceOutput.scrollHeight;
+    const diceAmount = Number(diceAmountInput.value);
+    const diceType = Number(diceTypeInput.value);
+    //check if diceAmount and diceType are numbers below 1 and 100
+    if (
+      diceAmount >= 1 &&
+      diceAmount <= 100 &&
+      diceType >= 1 &&
+      diceType <= 100 &&
+      !isNaN(diceAmount) &&
+      !isNaN(diceType)
+    ) {
+      const dice = rollMultipleDice(diceAmount, diceType);
+      const li = document.createElement("li");
+      li.innerText = fromatDiceOutput(diceAmount, diceType, dice);
+      li.classList.add("diceoutputitem");
+      diceOutput.append(li);
+      diceOutput.scrollTop = diceOutput.scrollHeight;
+    } else {
+      const li = document.createElement("li");
+      li.innerText = "Please enter a number between 1 and 100";
+      li.classList.add("diceoutputitem");
+      diceOutput.append(li);
+      diceOutput.scrollTop = diceOutput.scrollHeight;
+    }
   });
 
   rolld100.addEventListener("click", () => {
@@ -140,6 +157,19 @@ document.addEventListener("DOMContentLoaded", (event) => {
     li.classList.add("diceoutputitem");
     diceOutput.append(li);
     diceOutput.scrollTop = diceOutput.scrollHeight;
+  });
+
+  //---------------------------------------------------------Log handling-------------------------------------------------------------
+  const logButton = document.querySelector("#logBtn");
+  const exportLogBtn = document.querySelector("#exportLogBtn");
+
+  Log.loadLog();
+  logButton.addEventListener("click", () => {
+    Log.createLogEntry();
+  });
+
+  exportLogBtn.addEventListener("click", () => {
+    Log.exportLog();
   });
 
   //---------------------------------------------------------Character Combat Sheet handling-------------------------------------------------------------
@@ -320,7 +350,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const savedEnemies = JSON.parse(localStorage.getItem("enemies"));
     if (savedEnemies) {
       savedEnemies.forEach((enemy) => {
-        console.log(JSON.stringify(enemy));
         generateEnemyElement(enemy);
         const newEnemy = document.getElementById(enemy.enemyId);
         newEnemy.querySelector(".enemyWeaponMarker").style.visibility =
@@ -1229,7 +1258,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   //menübar und sheets
   function toggleSheet(sheetId) {
-    console.log(sheetId);
     const sheet = document.getElementById(sheetId);
     const isDisplayed = sheet.style.display === "block";
 
@@ -1250,10 +1278,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     } else if (sheetId === "shipSheet") {
       loadShipSheet();
     } else if (sheetId === "shipCombat") {
-      console.log("ship combat");
       loadShipCombat();
     } else if (sheetId === "characterCombat") {
-      console.log("character combat");
       loadEnemys();
     }
   }
