@@ -231,22 +231,49 @@ a:hover {
         background-color: #333; /* Hintergrundfarbe der Menüleiste */
         padding: 20px;
         box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
       }
       
       .menu-btn {
         display: block;
         padding: 10px;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         color: white;
         background-color: #555;
         border: none;
-        width: 100%;
+        width: calc(100% - 0px); /* Zieht den doppelten Padding-Wert ab, um die tatsächliche Breite zu erhalten */
         box-sizing: border-box;
         cursor: pointer;
       }
       
       .menu-btn:hover {
         background-color: #777;
+      }
+
+      .reset-btn-container {
+        position: absolute;
+        bottom: 40px; /* Positioniert den Container am unteren Rand der Menüleiste */
+        width: calc(100% - 40px); /* Breite anpassen, um Padding zu berücksichtigen */
+      }
+
+      .reset-game-btn {
+        padding: 10px;
+        margin-top: 10px; /* Fügt oben einen Abstand hinzu */
+        background-color: #900; /* Hintergrundfarbe für die Reset-Schaltfläche */
+        color: white;
+        border: none;
+        width: 100%;
+        cursor: pointer;
+      }
+
+      .reset-game-btn:hover {
+        background-color: #d67272;
+      }
+      
+      .reset-game-btn:hover {
+        background-color: #b00;
       }
       
       .sheet-window {
@@ -759,11 +786,19 @@ a:hover {
         overflow-y: auto; /* Ermöglicht das Scrollen, wenn der Inhalt länger als der Bildschirm ist */
       }
       
+      .diceroller .dicebuttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+        box-sizing: border-box;
+      }
+      
       .diceinputs {
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding: 20px;
+        padding: 10px;
         box-sizing: border-box;
       }
 
@@ -791,7 +826,7 @@ a:hover {
         color: white;
         background-color: #555;
         border: none;
-        width: 100%;
+        width: 60%;
         box-sizing: border-box;
         cursor: pointer;
       }

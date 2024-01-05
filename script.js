@@ -159,6 +159,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
     diceOutput.scrollTop = diceOutput.scrollHeight;
   });
 
+  //---------------------------------------------------------Reset Game-------------------------------------------------------------
+  const resetGameBtn = document.getElementById("resetGame");
+
+  resetGameBtn.addEventListener("click", (e) => {
+    alert("Game has been reseted");
+    localStorage.clear();
+    location.reload();
+  });
+
   //---------------------------------------------------------Log handling-------------------------------------------------------------
   const logButton = document.querySelector("#logBtn");
   const exportLogBtn = document.querySelector("#exportLogBtn");

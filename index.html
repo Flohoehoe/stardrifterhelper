@@ -16,6 +16,9 @@
       </button>
       <button class="menu-btn" data-sheet="log">Captain's Log</button>
       <button class="menu-btn" data-sheet="tutorial">How to play...</button>
+      <div class="reset-btn-container">
+        <button class="reset-game-btn" id="resetGame">Reset Game</button>
+      </div>
     </div>
 
     <div id="charSheet" class="sheet-window">
@@ -134,11 +137,11 @@
     <div id="shipCombat" class="combatSheet">
       <!-- Inhalt für Ship Combat -->
       <div class="enemyShips"></div>
-      <button class="addCombatant" id="addEnemyShip">+ Enemy Ship</button>
+      <button class="addCombatant" id="addEnemyShip">Add Enemy Ship</button>
     </div>
     <div id="characterCombat" class="combatSheet">
       <div class="enemies"></div>
-      <button class="addCombatant" id="addEnemy">+ Enemy</button>
+      <button class="addCombatant" id="addEnemy">Add Enemy</button>
       <!-- Inhalt für Character Combat -->
     </div>
 
@@ -263,8 +266,10 @@
             value="10"
           />
         </div>
-        <button class="dice-btn" id="roll">roll</button>
-        <button class="dice-btn" id="rolld100">roll 1d100</button>
+        <div class="dicebuttons">
+          <button class="dice-btn" id="roll">roll</button>
+          <button class="dice-btn" id="rolld100">roll 1d100</button>
+        </div>
       </div>
     </div>
     <footer>
